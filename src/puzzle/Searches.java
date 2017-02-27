@@ -12,9 +12,9 @@ public class Searches
 		{
 			public int compare( Node node1, Node node2 )
 			{
-				if( node1.getWeight() > node2.getWeight() )
-					return -1;
 				if( node1.getWeight() < node2.getWeight() )
+					return -1;
+				if( node1.getWeight() > node2.getWeight() )
 					return 1;
 				return 0;
 		    }
@@ -24,12 +24,16 @@ public class Searches
 		while( !queue.isEmpty() )
 		{
 			Node node = queue.poll();
+			//System.out.println( "P: " + node.getWeight() );
 			System.out.println( node );
 			if( node.toString().equals( goal.toString() ) )
 				break;
 			if( tree.containsKey( node ) )
 				for( Node children: tree.get( node ).keySet() )
+				{
+					//System.out.println( "C: " + children.getWeight() );
 					queue.add( children );
+				}
 		}
 	}
 }

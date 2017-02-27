@@ -54,7 +54,7 @@ public class EightPuzzle
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x - 1, y );
 				//Node childrenNode = new Node( newConfiguration, x - 1, y, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
-				Node childrenNode = new Node( newConfiguration, x - 1, y, 0 );
+				Node childrenNode = new Node( newConfiguration, x - 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -74,7 +74,7 @@ public class EightPuzzle
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x + 1, y );
 				//Node childrenNode = new Node( newConfiguration, x + 1, y, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
-				Node childrenNode = new Node( newConfiguration, x + 1, y, 0 );
+				Node childrenNode = new Node( newConfiguration, x + 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -94,7 +94,7 @@ public class EightPuzzle
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y - 1 );
 				//Node childrenNode = new Node( newConfiguration, x, y - 1, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
-				Node childrenNode = new Node( newConfiguration, x, y - 1, 0 );
+				Node childrenNode = new Node( newConfiguration, x, y - 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -114,7 +114,7 @@ public class EightPuzzle
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y + 1 );
 				//Node childrenNode = new Node( newConfiguration, x, y + 1, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
-				Node childrenNode = new Node( newConfiguration, x, y + 1, 0 );
+				Node childrenNode = new Node( newConfiguration, x, y + 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
