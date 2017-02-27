@@ -2,7 +2,6 @@ package puzzle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import puzzle.Node;
 
 public class EightPuzzle
 {

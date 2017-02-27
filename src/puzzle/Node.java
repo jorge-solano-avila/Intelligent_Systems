@@ -1,4 +1,5 @@
 package puzzle;
+
 public class Node
 {
 	private byte[][] configuration;
