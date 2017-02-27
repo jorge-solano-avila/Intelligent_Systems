@@ -1,4 +1,5 @@
 package puzzle;
+
 public class Puzzle
 {
 	private byte[][] initial;
