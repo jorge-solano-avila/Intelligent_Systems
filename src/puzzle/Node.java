@@ -45,6 +45,8 @@ public class Node
 				sum += correctDistance( tile, i, j );
 			}
 
+		//System.out.println( this.toString() );
+		//System.out.println( sum );
 		return sum;
 	}
 

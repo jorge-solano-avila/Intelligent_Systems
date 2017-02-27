@@ -8,13 +8,13 @@ public class Searches
 {
 	public static void ManhattanHeuristic( HashMap<Node, HashMap<Node, Byte>> tree, Node root )
 	{
-		PriorityQueue<Node> queue = new PriorityQueue<>( tree.keySet().size(), new Comparator<Node>()
+		PriorityQueue<Node> queue = new PriorityQueue<>( 2 * tree.keySet().size(), new Comparator<Node>()
 		{
 			public int compare( Node node1, Node node2 )
 			{
-				if( node1.getWeight() < node2.getWeight() )
-					return -1;
 				if( node1.getWeight() > node2.getWeight() )
+					return -1;
+				if( node1.getWeight() < node2.getWeight() )
 					return 1;
 				return 0;
 		    }
