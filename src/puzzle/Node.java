@@ -45,8 +45,6 @@ public class Node
 				sum += correctDistance( tile, i, j );
 			}
 
-		//System.out.println( this.toString() );
-		//System.out.println( sum );
 		return sum;
 	}
 
@@ -55,12 +53,12 @@ public class Node
 		this.configuration = configuration;
 	}
 	
-	public Node( byte[][] configuration, int x, int y )
+	public Node( byte[][] configuration, int x, int y, int weight )
 	{
 		this.configuration = configuration;
 		this.x = x;
 		this.y = y;
-		this.weight = sumCorrectDistances( configuration );
+		this.weight = sumCorrectDistances( configuration ) + weight;
 	}
 	
 	public int getX()
@@ -76,6 +74,11 @@ public class Node
 	public int getWeight()
 	{
 		return weight;
+	}
+	
+	public byte[][] getConfiguration()
+	{
+		return configuration;
 	}
 
 	@Override
