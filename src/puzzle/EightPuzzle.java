@@ -28,6 +28,7 @@ public class EightPuzzle
 		}
 		
 		makeTree( newConfiguration );
+		Searches.ManhattanHeuristic( tree, rootNode );
 	}
 	
 	public static void makeTree( byte[][] configuration )
