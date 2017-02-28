@@ -26,7 +26,7 @@ public class EightPuzzle
 			newConfiguration = disArrayConfiguration( newConfiguration );
 			//printConfiguration( newConfiguration );
 		}
-		
+
 		makeTree( newConfiguration );
 
 		Node initialNode = new Node( initialConfiguration );
