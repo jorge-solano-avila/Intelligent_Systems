@@ -31,6 +31,7 @@ public class EightPuzzle
 
 		Node initialNode = new Node( initialConfiguration );
 		Searches.BFS( tree, rootNode, initialNode );
+		Searches.DFS( tree, rootNode, initialNode );
 		Searches.ManhattanHeuristic( tree, rootNode, initialNode );
 	}
 	

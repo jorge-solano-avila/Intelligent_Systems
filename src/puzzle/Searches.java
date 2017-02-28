@@ -25,6 +25,25 @@ public class Searches
 		}
 		System.out.println();
 	}
+	
+	public static void DFS( HashMap<Node, HashMap<Node, Byte>> tree, Node root, Node goal )
+	{
+		System.out.println( "DFS" );
+		ArrayList<Node> stack = new ArrayList<>();
+
+		stack.add( root );
+		while( !stack.isEmpty() )
+		{
+			Node node = stack.remove( stack.size() - 1 );
+			System.out.println( node );
+			if( node.toString().equals( goal.toString() ) )
+				break;
+			if( tree.containsKey( node ) )
+				for( Node children: tree.get( node ).keySet() )
+					stack.add( children );
+		}
+		System.out.println();
+	}
 
 	public static void ManhattanHeuristic( HashMap<Node, HashMap<Node, Byte>> tree, Node root, Node goal )
 	{
