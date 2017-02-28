@@ -19,16 +19,19 @@ public class EightPuzzle
 		byte[][] initialConfiguration;
 		initialConfiguration = puzzle.getInitialConfiguration();
 
-		printConfiguration( initialConfiguration );
+		//printConfiguration( initialConfiguration );
 		byte[][] newConfiguration = initialConfiguration;
 		for( int i = 0; i < movements; ++i )
 		{
 			newConfiguration = disArrayConfiguration( newConfiguration );
-			printConfiguration( newConfiguration );
+			//printConfiguration( newConfiguration );
 		}
 		
 		makeTree( newConfiguration );
-		Searches.ManhattanHeuristic( tree, rootNode, new Node( initialConfiguration ) );
+
+		Node initialNode = new Node( initialConfiguration );
+		Searches.BFS( tree, rootNode, initialNode );
+		Searches.ManhattanHeuristic( tree, rootNode, initialNode );
 	}
 	
 	public static void makeTree( byte[][] configuration )
@@ -53,7 +56,6 @@ public class EightPuzzle
 			if( x - 1 >= 0 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x - 1, y );
-				//Node childrenNode = new Node( newConfiguration, x - 1, y, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
 				Node childrenNode = new Node( newConfiguration, x - 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
@@ -73,7 +75,6 @@ public class EightPuzzle
 			if( x + 1 <= SIZE - 1 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x + 1, y );
-				//Node childrenNode = new Node( newConfiguration, x + 1, y, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
 				Node childrenNode = new Node( newConfiguration, x + 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
@@ -93,7 +94,6 @@ public class EightPuzzle
 			if( y - 1 >= 0 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y - 1 );
-				//Node childrenNode = new Node( newConfiguration, x, y - 1, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
 				Node childrenNode = new Node( newConfiguration, x, y - 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
@@ -113,7 +113,6 @@ public class EightPuzzle
 			if( y + 1 <= SIZE - 1 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y + 1 );
-				//Node childrenNode = new Node( newConfiguration, x, y + 1, sumDistances( parentNode.getConfiguration(), newConfiguration ) );
 				Node childrenNode = new Node( newConfiguration, x, y + 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
@@ -215,28 +214,5 @@ public class EightPuzzle
 		newConfiguration[newX][newY] = aux;
 
 		return newConfiguration;
-	}
-	
-	public static int distance( byte[][] newConfiguration, byte tile, int i, int j )
-	{
-		for( int x = 0; x < SIZE; ++x )
-			for( int y = 0; y < SIZE; ++y )
-				if( newConfiguration[x][y] == tile )
-					return Math.abs( x - i ) + Math.abs( y - j );
-
-		return 0;
-	}
-	
-	public static byte sumDistances( byte[][] oldConfiguration, byte[][] newConfiguration )
-	{
-		byte sum = 0;
-		for( int i = 0; i < SIZE; ++i )
-			for( int j = 0; j < SIZE; ++j )
-			{
-				byte tile = oldConfiguration[i][j];
-				sum += distance( newConfiguration, tile, i, j );
-			}
-
-		return sum;
 	}
 }
