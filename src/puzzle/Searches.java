@@ -44,6 +44,33 @@ public class Searches
 		}
 		System.out.println();
 	}
+	
+	public static void DFSIterative( HashMap<Node, HashMap<Node, Byte>> tree, HashMap<Node, Integer> depths, Node root, Node goal )
+	{
+		System.out.println( "DFS Iterative" );
+		ArrayList<Node> stack = new ArrayList<>();
+
+		for( int i = 0; i < 11; ++i )
+		{
+			System.out.println( "Limit " + i );
+			stack.add( root );
+			while( !stack.isEmpty() )
+			{
+				Node node = stack.remove( stack.size() - 1 );
+				if( depths.get( node ) == i + 1 )
+					continue;
+				else if( depths.get( node ) == i + 2 )
+					continue;
+				System.out.println( node );
+				if( node.toString().equals( goal.toString() ) )
+					break;
+				if( tree.containsKey( node ) )
+					for( Node children: tree.get( node ).keySet() )
+						stack.add( children );
+			}
+			System.out.println();
+		}
+	}
 
 	public static void ManhattanHeuristic( HashMap<Node, HashMap<Node, Byte>> tree, Node root, Node goal )
 	{
