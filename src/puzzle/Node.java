@@ -5,9 +5,10 @@ public class Node
 	private byte[][] configuration;
 	private int x;
 	private int y;
-	private int weight;
+	private int manhattanDistance;
+	private int childrenDistance;
 	
-	public int correctDistance( byte tile, int i, int j )
+	private int correctDistance( byte tile, int i, int j )
 	{
 		int size = configuration.length;
 		switch( tile )
@@ -35,7 +36,7 @@ public class Node
 		return 0;
 	}
 	
-	public byte sumCorrectDistances( byte[][] configuration )
+	private byte sumCorrectDistances()
 	{
 		byte sum = 0;
 		for( int i = 0; i < configuration.length; ++i )
@@ -43,6 +44,47 @@ public class Node
 			{
 				byte tile = configuration[i][j];
 				sum += correctDistance( tile, i, j );
+			}
+
+		return sum;
+	}
+	
+	private int correctTile( byte tile, int i, int j )
+	{
+		int size = configuration.length;
+		switch( tile )
+		{
+			case 1:
+				return ( i == 0 && j == 0 )? 1: 0;
+			case 2:
+				return ( i == 0 && j == 1 )? 1: 0;
+			case 3:
+				return ( i == 0 && j == size - 1 )? 1: 0;
+			case 4:
+				return ( i == 1 && j == 0 )? 1: 0;
+			case 5:
+				return ( i == 1 && j == 1 )? 1: 0;
+			case 6:
+				return ( i == 1 && j == size - 1 )? 1: 0;
+			case 7:
+				return ( i == size - 1 && j == 0 )? 1: 0;
+			case 8:
+				return ( i == size - 1 && j == 1 )? 1: 0;
+			case 0:
+				return ( i == size - 1 && j == size - 1 )? 1: 0;
+		}
+		
+		return 0;
+	}
+	
+	private byte sumCorrectTiles()
+	{
+		byte sum = 0;
+		for( int i = 0; i < configuration.length; ++i )
+			for( int j = 0; j < configuration.length; ++j )
+			{
+				byte tile = configuration[i][j];
+				sum += correctTile( tile, i, j );
 			}
 
 		return sum;
@@ -58,7 +100,8 @@ public class Node
 		this.configuration = configuration;
 		this.x = x;
 		this.y = y;
-		this.weight = sumCorrectDistances( configuration ) + weight;
+		this.manhattanDistance = sumCorrectDistances() + weight;
+		this.childrenDistance = sumCorrectTiles() + weight;
 	}
 	
 	public int getX()
@@ -71,9 +114,14 @@ public class Node
 		return y;
 	}
 
-	public int getWeight()
+	public int getManhattanDistance()
 	{
-		return weight;
+		return manhattanDistance;
+	}
+	
+	public int getChildrenDistance()
+	{
+		return childrenDistance;
 	}
 	
 	public byte[][] getConfiguration()

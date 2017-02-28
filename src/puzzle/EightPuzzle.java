@@ -30,10 +30,11 @@ public class EightPuzzle
 		makeTree( newConfiguration );
 
 		Node initialNode = new Node( initialConfiguration );
-		Searches.BFS( tree, rootNode, initialNode );
-		Searches.DFS( tree, rootNode, initialNode );
-		Searches.DFSIterative( tree, depths, rootNode, initialNode );
-		Searches.ManhattanHeuristic( tree, rootNode, initialNode );
+		Searches.bfs( tree, rootNode, initialNode );
+		Searches.dfs( tree, rootNode, initialNode );
+		Searches.dfsIterative( tree, depths, rootNode, initialNode );
+		Searches.manhattanHeuristic( tree, rootNode, initialNode );
+		Searches.childrenHeuristic( tree, rootNode, initialNode );
 	}
 	
 	public static void makeTree( byte[][] configuration )
