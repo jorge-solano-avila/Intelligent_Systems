@@ -55,23 +55,23 @@ public class Node
 		switch( tile )
 		{
 			case 1:
-				return ( i == 0 && j == 0 )? 1: 0;
+				return ( i == 0 && j == 0 )? 0: 1;
 			case 2:
-				return ( i == 0 && j == 1 )? 1: 0;
+				return ( i == 0 && j == 1 )? 0: 1;
 			case 3:
-				return ( i == 0 && j == size - 1 )? 1: 0;
+				return ( i == 0 && j == size - 1 )? 0: 1;
 			case 4:
-				return ( i == 1 && j == 0 )? 1: 0;
+				return ( i == 1 && j == 0 )? 0: 1;
 			case 5:
-				return ( i == 1 && j == 1 )? 1: 0;
+				return ( i == 1 && j == 1 )? 0: 1;
 			case 6:
-				return ( i == 1 && j == size - 1 )? 1: 0;
+				return ( i == 1 && j == size - 1 )? 0: 1;
 			case 7:
-				return ( i == size - 1 && j == 0 )? 1: 0;
+				return ( i == size - 1 && j == 0 )? 0: 1;
 			case 8:
-				return ( i == size - 1 && j == 1 )? 1: 0;
+				return ( i == size - 1 && j == 1 )? 0: 1;
 			case 0:
-				return ( i == size - 1 && j == size - 1 )? 1: 0;
+				return ( i == size - 1 && j == size - 1 )? 0: 1;
 		}
 		
 		return 0;
