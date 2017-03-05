@@ -14,27 +14,54 @@ public class EightPuzzle
 
 	public static void main( String[] args )
 	{
-		int movements = 10;
+		int movements = 10, iterations = 30;
 		Puzzle puzzle = new Puzzle( SIZE );
 		byte[][] initialConfiguration;
 		initialConfiguration = puzzle.getInitialConfiguration();
 
 		//printConfiguration( initialConfiguration );
 		byte[][] newConfiguration = initialConfiguration;
-		for( int i = 0; i < movements; ++i )
+		int totalNodesBFS = 0, totalNodesDFS = 0, totalNodesIterativeDFS = 0, totalNodesManhattanHeuristic = 0, 
+			totalNodesChildrenHeuristic = 0, totalNodesInQueueBFS = 0, totalNodesInStackDFS = 0, totalNodesInStackIterativeDFS = 0,
+			totalNodesInQueueManhattanHeuristic = 0, totalNodesInQueueChildrenHeuristic = 0;
+		for( int i = 0; i < iterations; ++i )
 		{
-			newConfiguration = disArrayConfiguration( newConfiguration );
-			//printConfiguration( newConfiguration );
+			for( int j = 0; j < movements; ++j )
+			{
+				newConfiguration = disArrayConfiguration( newConfiguration );
+				//printConfiguration( newConfiguration );
+			}
+
+			makeTree( newConfiguration );
+	
+			Node initialNode = new Node( initialConfiguration );
+			Searches.bfs( tree, rootNode, initialNode );
+			totalNodesBFS += Searches.totalNodes;
+			totalNodesInQueueBFS += Searches.totalNodesInStructure;
+			Searches.dfs( tree, rootNode, initialNode );
+			totalNodesDFS += Searches.totalNodes;
+			totalNodesInStackDFS += Searches.totalNodesInStructure;
+			Searches.iterativeDFS( tree, depths, rootNode, initialNode );
+			totalNodesIterativeDFS += Searches.totalNodes;
+			totalNodesInStackIterativeDFS += Searches.totalNodesInStructure;
+			Searches.manhattanHeuristic( tree, rootNode, initialNode );
+			totalNodesManhattanHeuristic += Searches.totalNodes;
+			totalNodesInQueueManhattanHeuristic += Searches.totalNodesInStructure;
+			Searches.childrenHeuristic( tree, rootNode, initialNode );
+			totalNodesChildrenHeuristic += Searches.totalNodes;
+			totalNodesInQueueChildrenHeuristic += Searches.totalNodesInStructure;
 		}
-
-		makeTree( newConfiguration );
-
-		Node initialNode = new Node( initialConfiguration );
-		Searches.bfs( tree, rootNode, initialNode );
-		Searches.dfs( tree, rootNode, initialNode );
-		Searches.dfsIterative( tree, depths, rootNode, initialNode );
-		Searches.manhattanHeuristic( tree, rootNode, initialNode );
-		Searches.childrenHeuristic( tree, rootNode, initialNode );
+		
+		System.out.println( "Total nodes visited in BFS: " + ( totalNodesBFS / iterations ) );
+		System.out.println( "Longest nodes in queue - BFS: " + ( totalNodesInQueueBFS / iterations ) );
+		System.out.println( "Total nodes visited in DFS: " + ( totalNodesDFS / iterations ) );
+		System.out.println( "Longest nodes in stack - DFS: " + ( totalNodesInStackDFS / iterations ) );
+		System.out.println( "Total nodes visited in Iterative DFS: " + ( totalNodesIterativeDFS / iterations ) );
+		System.out.println( "Longest nodes in stack - Iterative DFS: " + ( totalNodesInStackIterativeDFS / iterations ) );
+		System.out.println( "Total nodes visited in Manhattan Heuristic: " + ( totalNodesManhattanHeuristic / iterations ) );
+		System.out.println( "Longest nodes in queue - Manhattan Heuristic: " + ( totalNodesInQueueManhattanHeuristic / iterations ) );
+		System.out.println( "Total nodes visited in Children Heuristic: " + ( totalNodesChildrenHeuristic / iterations ) );
+		System.out.println( "Longest nodes in queue - Children Heuristic: " + ( totalNodesInQueueChildrenHeuristic / iterations ) );
 	}
 	
 	public static void makeTree( byte[][] configuration )
@@ -43,7 +70,7 @@ public class EightPuzzle
 		depths = new HashMap<>();
 
 		byte weight = 1;
-		rootNode = new Node( configuration, X, Y, 0 );
+		rootNode = new Node( null, configuration, X, Y, 0 );
 		Node parentNode = rootNode;
 		depths.put( parentNode, 0 );
 		ArrayList<Node> queue = new ArrayList<>();
@@ -59,7 +86,7 @@ public class EightPuzzle
 			if( x - 1 >= 0 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x - 1, y );
-				Node childrenNode = new Node( newConfiguration, x - 1, y, 1 );
+				Node childrenNode = new Node( parentNode, newConfiguration, x - 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -78,7 +105,7 @@ public class EightPuzzle
 			if( x + 1 <= SIZE - 1 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x + 1, y );
-				Node childrenNode = new Node( newConfiguration, x + 1, y, 1 );
+				Node childrenNode = new Node( parentNode, newConfiguration, x + 1, y, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -97,7 +124,7 @@ public class EightPuzzle
 			if( y - 1 >= 0 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y - 1 );
-				Node childrenNode = new Node( newConfiguration, x, y - 1, 1 );
+				Node childrenNode = new Node( parentNode, newConfiguration, x, y - 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );
@@ -116,7 +143,7 @@ public class EightPuzzle
 			if( y + 1 <= SIZE - 1 )
 			{
 				byte[][] newConfiguration = newConfiguration( parentNode.getConfiguration(), x, y, x, y + 1 );
-				Node childrenNode = new Node( newConfiguration, x, y + 1, 1 );
+				Node childrenNode = new Node( parentNode, newConfiguration, x, y + 1, 1 );
 				if( tree.containsKey( parentNode ) )
 				{
 					HashMap<Node, Byte> childrens = tree.get( parentNode );

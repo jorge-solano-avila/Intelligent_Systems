@@ -2,6 +2,7 @@ package puzzle;
 
 public class Node
 {
+	private Node parent;
 	private byte[][] configuration;
 	private int x;
 	private int y;
@@ -95,8 +96,9 @@ public class Node
 		this.configuration = configuration;
 	}
 	
-	public Node( byte[][] configuration, int x, int y, int weight )
+	public Node( Node parent, byte[][] configuration, int x, int y, int weight )
 	{
+		this.parent = parent;
 		this.configuration = configuration;
 		this.x = x;
 		this.y = y;
@@ -127,6 +129,11 @@ public class Node
 	public byte[][] getConfiguration()
 	{
 		return configuration;
+	}
+	
+	public Node getParent()
+	{
+		return parent;
 	}
 
 	@Override
